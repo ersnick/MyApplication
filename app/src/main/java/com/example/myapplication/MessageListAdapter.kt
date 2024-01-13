@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView.ItemAnimator.ItemHolderInfo
 import com.example.myapplication.databinding.MessagesListBinding
 import java.text.FieldPosition
 
-class MessageAdapter : ListAdapter<Message, MessageAdapter.MessageHolder>(ItemComparator()) {
+class MessageAdapter : ListAdapter<Message, MessageAdapter.MessageHolder>(MessageComparator()) {
 
     class MessageHolder(private val binding: MessagesListBinding) : RecyclerView.ViewHolder(binding.root){
         fun bind(message1: Message) = with(binding){
@@ -27,7 +27,7 @@ class MessageAdapter : ListAdapter<Message, MessageAdapter.MessageHolder>(ItemCo
         }
     }
 
-    class ItemComparator : DiffUtil.ItemCallback<Message>(){
+    class MessageComparator : DiffUtil.ItemCallback<Message>(){
         override fun areItemsTheSame(oldItem: Message, newItem: Message): Boolean {
             return oldItem == newItem
         }

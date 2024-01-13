@@ -25,6 +25,8 @@ class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
     lateinit var adapter: MessageAdapter
     private lateinit var viewModel: YourViewModel
+    private val messages = ArrayList<Message>()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,29 +35,29 @@ class MainActivity : AppCompatActivity() {
         val mText: EditText = binding.messageText
 
         viewModel = ViewModelProvider(this).get(YourViewModel::class.java)
+        initRcView()
 
-        val messages = ArrayList<Message>()
         binding.bSend.setOnClickListener {
-            val message = Message("user", mText.text.toString())
-            messages.add(message)
+            val userInputMessage = Message()
+            userInputMessage.role = "you"
+            userInputMessage.messageText = mText.text.toString()
+            messages.add(userInputMessage)
 
             viewModel.viewModelScope.launch {
                 try {
                     val response = viewModel.sendRequest(mText.text.toString())
-                    // Обработка ответа здесь
-                    message.role = "yandexGPT"
-                    message.messageText = response
-                    messages.add(message)
-                    mText.setText("")
+                    val serverResponseMessage = Message()
+                    serverResponseMessage.role = "yandexGPT"
+                    serverResponseMessage.messageText = response
+                    messages.add(serverResponseMessage)
                     adapter.submitList(messages)
+                    mText.setText("")
                 } catch (e: Exception) {
                     // Обработка ошибки здесь
                 }
             }
+            mText.setText("")
         }
-
-        adapter.submitList(messages)
-        initRcView()
     }
 
     private fun initRcView() = with(binding){

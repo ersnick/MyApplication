@@ -59,6 +59,7 @@ class HelperClass {
                             .let { it["message"] as Map<*, *> }
                             .let { it["text"] as String }
 
+                        println(textResponse)
                         continuation.resume(textResponse)
                     } catch (e: Exception) {
                         continuation.resumeWithException(e)
