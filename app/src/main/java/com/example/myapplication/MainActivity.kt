@@ -23,8 +23,10 @@ class MainActivity : AppCompatActivity() {
             val message = Message("user", mText.text.toString())
             val response = helper.sendRequest(mText.text.toString())
             messages.add(message)
+            adapter.submitList(messages)
             message.role = "yandexGPT"
             message.messageText = response
+            messages.add(message)
             mText.setText("")
             adapter.submitList(messages)
         }

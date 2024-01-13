@@ -1,4 +1,5 @@
 package com.example.myapplication
+
 import com.google.gson.Gson
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
@@ -47,7 +48,7 @@ class HelperClass {
             .let { it["message"] as Map<*, *> }
             .let { it["text"] as String }
 
-        return(textResponse)
+        return textResponse
     }
 
 }
